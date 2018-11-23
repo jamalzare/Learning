@@ -1,0 +1,1022 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1561\cocoasubrtf200
+{\fonttbl\f0\fswiss\fcharset0 Helvetica;\f1\fnil\fcharset0 Menlo-Regular;\f2\fnil\fcharset0 Menlo-Bold;
+\f3\fswiss\fcharset0 ArialMT;\f4\fnil\fcharset0 Verdana;\f5\froman\fcharset0 Times-Roman;
+\f6\fmodern\fcharset0 CourierNewPSMT;\f7\fnil\fcharset0 Tahoma;}
+{\colortbl;\red255\green255\blue255;\red92\green38\blue153;\red0\green11\blue255;\red77\green0\blue158;
+\red46\green13\blue110;\red180\green0\blue98;\red0\green128\blue255;\red68\green137\blue147;\red251\green2\blue7;
+\red11\green87\blue42;\red38\green38\blue38;\red180\green0\blue98;\red0\green0\blue0;\red92\green38\blue153;
+\red68\green137\blue147;\red77\green0\blue158;\red186\green0\blue17;\red0\green11\blue255;\red0\green0\blue0;
+\red0\green0\blue0;\red48\green111\blue121;\red32\green60\blue63;\red29\green133\blue25;\red14\green0\blue45;
+\red33\green255\blue6;\red46\green13\blue110;\red11\green96\blue192;\red255\green255\blue255;\red87\green96\blue105;
+\red27\green29\blue31;\red235\green236\blue237;\red13\green0\blue129;\red36\green38\blue41;\red37\green127\blue159;
+\red43\green39\blue19;}
+{\*\expandedcolortbl;;\csgenericrgb\c36078\c14902\c60000;\csgenericrgb\c0\c4314\c100000;\csgenericrgb\c30196\c0\c61961;
+\csgenericrgb\c18039\c5098\c43137;\csgenericrgb\c70588\c0\c38431;\csgenericrgb\c0\c50196\c100000;\csgenericrgb\c26667\c53725\c57647;\cssrgb\c100000\c14913\c0;
+\csgenericrgb\c4314\c34118\c16471;\cssrgb\c20000\c20000\c20000;\csgenericrgb\c70682\c0\c38264;\csgenericrgb\c0\c0\c0;\csgenericrgb\c35900\c14900\c60100;
+\csgenericrgb\c26518\c53646\c57619;\csgenericrgb\c30278\c0\c61966;\csgenericrgb\c72768\c0\c6662;\csgenericrgb\c0\c4459\c99822;\cssrgb\c0\c0\c0;
+\csgray\c0\c0;\csgenericrgb\c18769\c43699\c47289;\csgenericrgb\c12359\c23384\c24757;\csgenericrgb\c11489\c52197\c9852;\cssrgb\c6643\c1990\c23261;
+\cssrgb\c0\c97680\c0;\csgenericrgb\c18100\c5200\c43100;\cssrgb\c0\c46667\c80000;\cssrgb\c100000\c100000\c100000;\cssrgb\c41569\c45098\c48627;
+\cssrgb\c14118\c15294\c16078;\cssrgb\c93725\c94118\c94510;\cssrgb\c6275\c6275\c58039;\cssrgb\c18824\c20000\c21176;\cssrgb\c16863\c56863\c68627;
+\cssrgb\c22353\c20000\c9412;}
+\margl1440\margr1440\vieww28600\viewh18000\viewkind0
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f0\fs24 \cf0 what learned\
+\pard\tx890\pardeftab890\pardirnatural\partightenfactor0
+
+\f1\fs36 \cf0 \CocoaLigature0 \
+\
+*best animation for transparent a view\
+blackView.\cf2 alpha\cf0  = \cf3 0\cf0 \
+            \
+            \cf4 UIView\cf0 .\cf5 animate\cf0 (withDuration: \cf3 0.5\cf0 , animations: \{\
+                blackView.\cf2 alpha\cf0  = \cf3 1\cf0 \
+            \})\
+\
+\
+*when we change orientation of device some size of cells in collection view get messy or get wrong sizes to fix this we use inavalidatLayout in willTransition method:\
+\pard\tx890\pardeftab890\pardirnatural\partightenfactor0
+\cf6 override\cf7  \cf6 func\cf7  willTransition(to newCollection: \cf4 UITraitCollection\cf7 , with coordinator: \cf4 UIViewControllerTransitionCoordinator\cf7 ) \{\
+    \
+        coordinator.\cf5 animate\cf7 (alongsideTransition: \{\cf6 _\cf7  \cf6 in\cf7 \
+            \cf6 self\cf7 .\cf8 collectionView\cf7 .\cf2 collectionViewLayout\cf7 .\cf5 invalidateLayout\cf7 ()\
+        \}, completion: \cf6 nil\cf7 )\
+        \
+    \}\cf0 \
+\
+\pard\pardeftab720\partightenfactor0
+
+\fs32 \cf0 \expnd0\expndtw0\kerning0
+\CocoaLigature1 \
+* 
+\f0\b\fs42 Make custom delegation weak:\
+
+\f1\b0\fs32 class A \{\
+   weak var delegate: myCustomDelegation? \
+\cf9    
+\f2\b //making delegate as weak to break the retain cycle
+\f1\b0 \cf0 \
+\}
+\fs36 \kerning1\expnd0\expndtw0 \CocoaLigature0 \
+\pard\tx890\pardeftab890\pardirnatural\partightenfactor0
+
+\f0 \cf0 \CocoaLigature1 \
+
+\fs44 *\expnd0\expndtw0\kerning0
+In Swift there are two 
+\i very
+\i0  common implementations of decorator pattern: 
+\b \cf10 Extensions
+\b0 \cf0  and 
+\b \cf10 Delegation
+\b0 \cf0 .\kerning1\expnd0\expndtw0 \
+\pard\tx890\pardeftab890\pardirnatural\partightenfactor0
+
+\fs24 \cf0 \
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+\cf0 \
+\
+*
+\fs80 \cf11 \expnd0\expndtw0\kerning0
+UICollectionViewLayoutAttributes\
+\pard\pardeftab720\partightenfactor0
+
+\fs44 \cf11 A layout object that manages the layout-related attributes for a given item in a collection view.\
+*Layout objects create instances of this class when asked to do so by the collection view. In turn, the collection view uses the layout information to position cells and supplementary views inside its bounds.\
+* one of the method we have to override is collectionViewContentSize method to certain the content size of whole collection view:
+\fs34 \
+\pard\tx469\pardeftab469\pardirnatural\partightenfactor0
+
+\f1\fs38 \cf12 \cb13 \kerning1\expnd0\expndtw0 override\cf7  \cf12 var\cf7  collectionViewContentSize: \cf14 CGSize\cf7 \{
+\f0\fs24 \cf0 \
+
+\f1\fs38 \cf7     \cf12 return\cf7  \cf14 CGSize\cf7 (width: \cf15 width\cf7 , height: \cf15 contentHeight\cf7 )
+\f0\fs24 \cf0 \
+
+\f1\fs38 \cf7   \}\
+
+\f0\fs34 \cf11 \cb1 \expnd0\expndtw0\kerning0
+\
+\pard\pardeftab720\partightenfactor0
+
+\fs24 \cf0 \kerning1\expnd0\expndtw0 \
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+\cf0 \
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\fs44 \cf0 * the other method to override is prepareLayout method this is called layout operation gone take a place
+\fs36 \
+\
+\'97\'97\'97\'97\'97\'97\'97\'97\'97\
+we can use Generics for TableViews for decrease tasks like register, reload and another things and we can add more functionality like infinite scroll and Avoid repeating:\
+\
+\pard\tx989\pardeftab989\pardirnatural\partightenfactor0
+
+\f1\fs40 \cf12 \cb13 class\cf7  BaseTableViewController<T: \cf16 GenericCell\cf7 <\cf16 U\cf7 >, U> : \cf16 UITableViewController\cf7  \{
+\f0\fs24 \cf0 \
+
+\f1\fs40 \cf7     
+\f0\fs24 \cf0 \
+
+\f1\fs40 \cf7     \cf12 let\cf7  cellIdentifier = \cf17 ""
+\f0\fs24 \cf0 \
+
+\f1\fs40 \cf7     \cf12 var\cf7  items = [U]()
+\f0\fs24 \cf0 \
+
+\f1\fs40 \cf7     \cf12 var\cf7  rowHeight: \cf16 CGFloat\cf7  = \cf18 50
+\f0\fs24 \cf0 \
+
+\f1\fs40 \cf7     
+\f0\fs24 \cf0 \
+
+\f1\fs40 \cf7     \cf12 override\cf7  \cf12 func\cf7  viewDidLoad() \{
+\f0\fs24 \cf0 \
+
+\f1\fs40 \cf7         \cf12 super\cf7 .viewDidLoad()
+\f0\fs24 \cf0 \
+
+\f1\fs40 \cf7         
+\f0\fs24 \cf0 \
+
+\f1\fs40 \cf7         cellIdentifier = NSStringFromClass(T.\cf12 self\cf7 )
+\f0\fs24 \cf0 \
+
+\f1\fs40 \cf7         tableView.register(T.\cf12 self\cf7 , forCellReuseIdentifier: cellIdentifier)
+\f0\fs24 \cf0 \
+
+\f1\fs40 \cf7     \}
+\f0\fs36 \cf0 \cb1 \
+
+\f1\fs40 \cf7 \cb13     
+\f0\fs24 \cf0 \
+
+\f1\fs40 \cf7     \cf12 override\cf7  \cf12 func\cf7  tableView(\cf12 _\cf7  tableView: \cf16 UITableView\cf7 , numberOfRowsInSection section: \cf16 Int\cf7 ) -> \cf16 Int\cf7  \{
+\f0\fs24 \cf0 \
+
+\f1\fs40 \cf7         \cf12 return\cf7  items.count
+\f0\fs24 \cf0 \
+
+\f1\fs40 \cf7     \}
+\f0\fs24 \cf0 \
+
+\f1\fs40 \cf7     
+\f0\fs24 \cf0 \
+
+\f1\fs40 \cf7     \cf12 override\cf7  \cf12 func\cf7  tableView(\cf12 _\cf7  tableView: \cf16 UITableView\cf7 , cellForRowAt indexPath: \cf16 IndexPath\cf7 ) -> \cf16 UITableViewCell\cf7  \{
+\f0\fs24 \cf0 \
+
+\f1\fs40 \cf7         
+\f0\fs24 \cf0 \
+
+\f1\fs40 \cf7         \cf12 let\cf7  cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) \cf12 as\cf7 ! \cf16 GenericCell
+\f0\fs24 \cf0 \
+
+\f1\fs40 \cf7         cell.item = items[indexPath.item]
+\f0\fs24 \cf0 \
+
+\f1\fs40 \cf7         \cf12 return\cf7  cell
+\f0\fs24 \cf0 \
+
+\f1\fs40 \cf7     \}
+\f0\fs24 \cf0 \
+
+\f1\fs40 \cf7     
+\f0\fs24 \cf0 \
+
+\f1\fs40 \cf7     \cf12 func\cf7  tableView(\cf12 _\cf7  tableView: \cf16 UITableView\cf7 , heightForRowAt indexPath: \cf16 IndexPath\cf7 ) -> \cf16 CGFloat\cf7  \{
+\f0\fs24 \cf0 \
+
+\f1\fs40 \cf7         \cf12 return\cf7  rowHeight
+\f0\fs24 \cf0 \
+
+\f1\fs40 \cf7     \}\
+\
+\cf19 \cb20 using very easy and fast:\
+\
+\cf12 \cb13 class\cf7  UserCell: \cf21 GenericCell\cf7 <\cf21 User\cf7 > \{
+\f0\fs24 \cf0 \
+
+\f1\fs40 \cf7     \cf12 override\cf7  \cf12 var\cf7  item: \cf21 User\cf7 ?\{
+\f0\fs24 \cf0 \
+
+\f1\fs40 \cf7         \cf12 didSet\cf7 \{
+\f0\fs24 \cf0 \
+
+\f1\fs40 \cf7             \cf14 textLabel\cf7 ?.\cf14 text\cf7  = \cf15 item\cf7 ?.\cf15 name
+\f0\fs24 \cf0 \
+
+\f1\fs40 \cf7         \}
+\f0\fs24 \cf0 \
+
+\f1\fs40 \cf7     \}
+\f0\fs24 \cf0 \
+
+\f1\fs40 \cf7 \}
+\f0\fs24 \cf0 \
+\
+
+\f1\fs40 \cf12 class\cf7  UsersTableViewController: \cf21 BaseTableViewController\cf7 <\cf21 UserCell\cf7 , \cf21 User\cf7 > \{
+\f0\fs24 \cf0 \
+
+\f1\fs40 \cf7     
+\f0\fs24 \cf0 \
+
+\f1\fs40 \cf7     \cf12 override\cf7  \cf12 func\cf7  viewDidLoad() \{
+\f0\fs24 \cf0 \
+
+\f1\fs40 \cf7         \cf12 super\cf7 .\cf22 viewDidLoad\cf7 ()
+\f0\fs24 \cf0 \
+\
+
+\f1\fs40 \cf7         \cf14 tableView\cf7 .\cf14 rowHeight\cf7  = \cf18 120
+\f0\fs24 \cf0 \
+
+\f1\fs40 \cf7         \cf22 reloadData\cf7 ()
+\f0\fs24 \cf0 \
+
+\f1\fs40 \cf7     \}
+\f0\fs24 \cf0 \
+
+\f1\fs40 \cf7     
+\f0\fs24 \cf0 \
+
+\f1\fs40 \cf7     \cf23 // dont need to impelement datasource Delegate and another any more and if its need we just override them.
+\f0\fs24 \cf0 \
+
+\f1\fs40 \cf7 \}\
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f0\fs36 \cf0 \cb1 \
+\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\fs24 \cf0 {{\NeXTGraphic Pasted Graphic 1.tiff \width28100 \height15180 \appleattachmentpadding0 \appleembedtype0 \appleaqc
+}¬}\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\fs36 \cf0 \
+\
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\fs48 \cf0 the swift ARC (Automatic Reference Counting) for manage memory\
+ARC: in this system references to object get counted\cf9  when count equal zero the object will remove\
+\cf24 * a weak or unowned references dose not increment the reference count.\
+* difference weak and unowned: weak-> child is optional for parent and when parent removed child will removed, unowned -> child is not optional and definitely exist all the time but when parent remove, it will removed\
+* weak for optionals and unowned for forces\
+* unowned references has to have a value \
+\'97\'97\'97\'97\'97\'97\'97\'97\'97\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\fs36 \cf0 *closures are reference types and they have its own object and own address memory\
+*
+\fs44  we can pass data to closure:\
+\pard\tx1038\pardeftab1038\pardirnatural\partightenfactor0
+
+\f1\fs42 \cf12 \cb13 var\cf7  clouser = \{ [label = \cf16 UILabel\cf7 (), str = \cf17 "text"\cf7 , age = \cf18 23\cf7 ] \cf12 in
+\f0\fs24 \cf0 \
+
+\f1\fs42 \cf7         label.\cf14 text\cf7  = \cf17 "\cf7 \\\cf17 (\cf7 str\cf17 ):\cf7 \\\cf17 (\cf7 age\cf17 )"
+\f0\fs24 \cf0 \
+
+\f1\fs42 \cf7     \}
+\f0\fs44 \cf0 \cb1 \
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\fs36 \cf0 \
+because in above code label has strongrefrence we set it weak:\
+\pard\tx1038\pardeftab1038\pardirnatural\partightenfactor0
+
+\f1\fs42 \cf12 \cb13 var\cf7  clouser = \{ [\cf9 \cb25 weak\cf7 \cb13  label = \cf16 UILabel\cf7 (), str = \cf17 "text"\cf7 , age = \cf18 23\cf7 ] \cf12 in
+\f0\fs24 \cf0 \
+
+\f1\fs42 \cf7         label?.\cf14 text\cf7  = \cf17 "\cf7 \\\cf17 (\cf7 str\cf17 ):\cf7 \\\cf17 (\cf7 age\cf17 )"
+\f0\fs24 \cf0 \
+
+\f1\fs42 \cf7     \}
+\f0\fs36 \cf0 \cb1 \
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\fs44 \cf0 \
+in closures when we use self we can use unowned reference because self never won\'92t be nil\
+\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
+
+\fs24 \cf0 \cb13 \
+\pard\tx1038\pardeftab1038\pardirnatural\partightenfactor0
+
+\f1\fs42 \cf7     \cf12 var\cf7  clouser = \{ [\cf9 \cb25 unowned\cf7 \cb13  \cf12 \ulth \ulc12 s\ulnone elf\cf7 ] \cf12 in
+\f0\fs24 \cf0 \
+\pard\tx1038\pardeftab1038\pardirnatural\partightenfactor0
+
+\f1\fs42 \cf7         \cf26 print\cf7 (\cf17 "\cf7 \\\cf17 (\cf12 self\cf17 ) is unowned never be nil"\cf7 )
+\f0\fs24 \cf0 \
+
+\f1\fs42 \cf7     \}
+\f0\fs44 \cf0 \cb1 \
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+\cf0 \
+\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\
+*we can use \cf9 \cb25 deinit()\cf0 \cb1  method to check objects like view controllers are removed from memory\
+* when we dismiss ViewController its not removed form memory\
+* when we use observers in swift we have to removeObserver to remove from memory\
+* the child class exist as long as the parent exist\
+*we can limit protocol adoption to class types and not structures or enumerations,  by adding the AnyObject protocol to a protocols inheritance list:\
+\pard\tx939\pardeftab939\pardirnatural\partightenfactor0
+
+\f1\fs38 \cf12 \cb13 protocol\cf7  myProtocol: \cf9 \cb25 AnyObject\cf7 \cb13  \{
+\f0\fs24 \cf0 \
+
+\f1\fs38 \cf7     \cf12 func\cf7  doSomthing()
+\f0\fs24 \cf0 \
+
+\f1\fs38 \cf7 \}
+\f0\fs24 \cf0 \
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\fs44 \cf0 \cb1 \
+\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\
+\pard\pardeftab720\sl20\qc\partightenfactor0
+
+\f3\fs2 \cf27 \cb28 \expnd0\expndtw0\kerning0
+up vote
+\fs40 \cf29 \cb1 \
+
+\fs2 \cf27 \cb28 down vote\cb1 \
+\pard\pardeftab720\sl380\sa300\partightenfactor0
+
+\fs30 \cf30 \cb28 Lazy variables that aren't closure properties are not retained by anything so there is no need to use\'a0
+\f1\fs26 \cb31 [unowned self]
+\f3\fs30 \cb28 \'a0here:\cb1 \
+\pard\pardeftab720\sl320\partightenfactor0
+
+\f1\fs26 \cf32 \cb31 class\cf33  \cf34 Test\cf33  \{\
+    lazy \cf32 var\cf33  tableView: \cf34 UITableView\cf33  = \{\
+\
+        \cf32 let\cf33  tableView = \cf34 UITableView\cf33 (frame: \cf32 self\cf33 .view.bounds, style: .plain)\
+        tableView.\cf32 delegate\cf33  = \cf32 self\cf33 \
+        tableView.dataSource = \cf32 self\cf33 \
+        \cf32 return\cf33  tableView\
+    \}()\
+\}\cf35 \
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f0\fs44 \cf0 \cb1 \kerning1\expnd0\expndtw0 \
+\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\
+ design principles:\
+	- identify aspect of your application that vary and separate them from what stays the same.\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\b \cf0 	- program to an interface not an implementation\
+	
+\b0 - favor composition over inheritance (composition better than inheritance: HAS-A can be better than IS-A)\
+	- strive for loosely coupled designs between objects that interact.\
+	- class should be open for extension, but closed for modification.(open close principle)\
+	- depend upon abstraction. do not depend upon concrete classes.\
+	- principle of less knowledge - talk only to your immediate friends. (this purpose of fecade)\
+	- hollywood principle: don\'92t call us, we\'92ll call you\
+\
+* hollywood principle says: high-level modules not depending on low levels.\
+* the strategy pattern: defines family of algorithm, encapsulates each one and makes them interchangeable specially at runtime. strategy lets	 the algorithm vary independently from clients that use it. 
+\b it works for runtime\
+\
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\b0\fs24 \cf0 {{\NeXTGraphic Pasted Graphic.tiff \width22760 \height4280 \appleattachmentpadding0 \appleembedtype0 \appleaqc
+}¬}\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+\cf0 \
+\
+\pard\pardeftab720\sl360\partightenfactor0
+
+\f4\b\fs30 \cf19 \cb28 \expnd0\expndtw0\kerning0
+* Encapsulation
+\b0 \'a0is one of the four fundamental OOP concepts. The other three are inheritance, polymorphism, and abstraction.
+\f0\b\fs44 \cf0 \cb1 \kerning1\expnd0\expndtw0 \
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\b0 \cf0 \
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\fs24 \cf0 {{\NeXTGraphic 1__#$!@%!#__Pasted Graphic.tiff \width14580 \height8920 \appleattachmentpadding0 \appleembedtype0 \appleaqc
+}¬}\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\fs44 \cf0 \
+\
+\pard\pardeftab720\sl280\sa240\partightenfactor0
+
+\f5\fs24 \cf19 \expnd0\expndtw0\kerning0
+\
+*
+\fs36 solid
+\fs24 \
+\pard\tx939\pardeftab939\pardirnatural\partightenfactor0
+
+\f1\fs38 \cf23 \cb13 \kerning1\expnd0\expndtw0 //in the name of God
+\f0\fs24 \cf0 \
+
+\f1\fs38 \cf23 //
+\f0\fs24 \cf0 \
+
+\f1\fs38 \cf23 //solid:
+\f0\fs24 \cf0 \
+
+\f1\fs38 \cf23 //S->SRP : Single Responsibility
+\f0\fs24 \cf0 \
+
+\f1\fs38 \cf23 //o->OCP: open-closed principle
+\f0\fs24 \cf0 \
+
+\f1\fs38 \cf23 //L->LSP: Liskov substitution principle  
+\f6 \uc0\u1580 \u1575 \u1740 \u1711 \u1586 \u1740 \u1606 \u1740 
+\f0\fs24 \cf0 \
+
+\f1\fs38 \cf23 //I->ISP: Interface segregation principle  
+\f6 \uc0\u1578 \u1601 \u1705 \u1740 \u1705 
+\f0\fs24 \cf0 \
+
+\f1\fs38 \cf23 //D->DIP: dependency Inversion principle 
+\f6 \uc0\u1575 \u1740 \u1606 \u1608 \u1585 \u1578 \u1585 
+\f0\fs24 \cf0 \
+
+\f1\fs38 \cf23 //
+\f0\fs24 \cf0 \
+
+\f1\fs38 \cf23 //* priciple: 
+\f6 \uc0\u1575 \u1589 \u1604 
+\f1 - 
+\f6 \uc0\u1602 \u1575 \u1593 \u1583 \u1607 
+\f1  
+\f6 \uc0\u1705 \u1604 \u1740 
+\f0\fs24 \cf0 \
+
+\f1\fs38 \cf23 //*decoupling: 
+\f6 \uc0\u1580 \u1583 \u1575 
+\f1  
+\f6 \uc0\u1705 \u1585 \u1583 \u1606 
+\f1 , 
+\f6 \uc0\u1605 \u1580 \u1586 \u1575 
+\f1  
+\f6 \uc0\u1705 \u1585 \u1583 \u1606 
+\f1 , 
+\f6 \uc0\u1578 \u1601 \u1705 \u1740 \u1705 
+\f1  
+\f6 \uc0\u1705 \u1585 \u1583 \u1606 
+\f1 , 
+\f6 \uc0\u1587 \u1608 \u1575 
+\f1  
+\f6 \uc0\u1705 \u1585 \u1583 \u1606 
+\f0\fs24 \cf0 \
+\
+\
+
+\f1\fs38 \cf23 // for Solid ask yourself
+\f0\fs24 \cf0 \
+
+\f1\fs38 \cf23 // -how many responsibilities does this class have?
+\f0\fs24 \cf0 \
+
+\f1\fs38 \cf23 // -Do i need to change this class to extend its expected behaviore?
+\f0\fs24 \cf0 \
+
+\f1\fs38 \cf23 // -Is this subclass substitutable for its parent?
+\f0\fs24 \cf0 \
+
+\f1\fs38 \cf23 // -Is this clint exposed to functionality that it does/should not use?
+\f0\fs24 \cf0 \
+
+\f1\fs38 \cf23 // -what parts of this class change frequntly?
+\f0\fs24 \cf0 \
+
+\f1\fs38 \cf23 // -Does this class depand on concrete dependencies?
+\f0\fs24 \cf0 \
+
+\f1\fs38 \cf23 // -does my class need THIS many imports?
+\f0\fs24 \cf0 \
+\
+
+\f1\fs38 \cf23 //s: 
+\f6 \uc0\u1607 \u1585 
+\f1  
+\f6 \uc0\u1605 \u1575 \u1688 \u1608 \u1604 
+\f1  
+\f6 \uc0\u1606 \u1585 \u1605 
+\f1  
+\f6 \uc0\u1575 \u1601 \u1586 \u1575 \u1585 \u1740 
+\f1  
+\f6 \uc0\u1605 \u1740 \u1576 \u1575 \u1740 \u1587 \u1578 
+\f1  
+\f6 \uc0\u1578 \u1606 \u1607 \u1575 
+\f1  
+\f6 \uc0\u1740 \u1705 
+\f1  
+\f6 \uc0\u1583 \u1604 \u1740 \u1604 
+\f1  
+\f6 \uc0\u1576 \u1585 \u1575 \u1740 
+\f1  
+\f6 \uc0\u1578 \u1594 \u1740 \u1740 \u1585 
+\f1  
+\f6 \uc0\u1583 \u1575 \u1588 \u1578 \u1607 
+\f1  
+\f6 \uc0\u1576 \u1575 \u1588 \u1583 
+\f0\fs24 \cf0 \
+
+\f1\fs38 \cf23 //o: 
+\f6 \uc0\u1605 \u1575 \u1688 \u1608 \u1604 \u8204 \u1607 \u1575 \u1740 
+\f1  
+\f6 \uc0\u1606 \u1585 \u1605 
+\f1  
+\f6 \uc0\u1575 \u1601 \u1586 \u1575 \u1585 
+\f1  
+\f6 \uc0\u1576 \u1575 \u1740 \u1583 
+\f1  
+\f6 \uc0\u1576 \u1585 \u1575 \u1740 
+\f1  
+\f6 \uc0\u1578 \u1594 \u1740 \u1740 \u1585 \u1575 \u1578 
+\f1  
+\f6 \uc0\u1576 \u1587 \u1578 \u1607 
+\f1  
+\f6 \uc0\u1608 
+\f1  
+\f6 \uc0\u1576 \u1585 \u1575 \u1740 
+\f1  
+\f6 \uc0\u1578 \u1608 \u1587 \u1593 \u1607 
+\f1  
+\f6 \uc0\u1576 \u1575 \u1586 
+\f1  
+\f6 \uc0\u1576 \u1575 \u1588 \u1606 \u1583 
+\f0\fs24 \cf0 \
+
+\f1\fs38 \cf23 //l: 
+\f6 \uc0\u1586 \u1740 \u1585 
+\f1  
+\f6 \uc0\u1705 \u1604 \u1575 \u1587 \u8204 \u1607 \u1575 
+\f1  
+\f6 \uc0\u1576 \u1575 \u1740 \u1583 
+\f1  
+\f6 \uc0\u1576 \u1578 \u1608 \u1575 \u1606 \u1606 \u1583 
+\f1  
+\f6 \uc0\u1580 \u1575 \u1740 \u1711 \u1586 \u1740 \u1606 
+\f1  
+\f6 \uc0\u1606 \u1608 \u1593 
+\f1  
+\f6 \uc0\u1662 \u1575 \u1740 \u1607 \u8204 \u1740 
+\f1  
+\f6 \uc0\u1582 \u1608 \u1583 
+\f1  
+\f6 \uc0\u1576 \u1575 \u1588 \u1606 \u1583 
+\f0\fs24 \cf0 \
+
+\f1\fs38 \cf23 //isp :  
+\f6 \uc0\u1705 \u1604 \u1575 \u1740 \u1606 \u1578 \u8204 \u1607 \u1575 
+\f1  
+\f6 \uc0\u1606 \u1576 \u1575 \u1740 \u1583 
+\f1  
+\f6 \uc0\u1608 \u1575 \u1576 \u1587 \u1578 \u1607 
+\f1  
+\f6 \uc0\u1576 \u1607 
+\f1  
+\f6 \uc0\u1605 \u1578 \u1583 \u1607 \u1575 \u1740 \u1740 
+\f1  
+\f6 \uc0\u1576 \u1575 \u1588 \u1606 \u1583 
+\f1  
+\f6 \uc0\u1705 \u1607 
+\f1  
+\f6 \uc0\u1570 \u1606 \u1607 \u1575 
+\f1  
+\f6 \uc0\u1585 \u1575 
+\f1  
+\f6 \uc0\u1662 \u1740 \u1575 \u1583 \u1607 
+\f1  
+\f6 \uc0\u1587 \u1575 \u1586 \u1740 
+\f1  
+\f6 \uc0\u1606 \u1605 \u1740 \u8204 \u1705 \u1606 \u1606 \u1583 
+\f1 .
+\f0\fs24 \cf0 \
+
+\f1\fs38 \cf23 //d : 
+\f6 \uc0\u1605 \u1575 \u1688 \u1608 \u1604 \u8204 \u1607 \u1575 \u1740 
+\f1  
+\f6 \uc0\u1587 \u1591 \u1581 
+\f1  
+\f6 \uc0\u1576 \u1575 \u1604 \u1575 
+\f1  
+\f6 \uc0\u1606 \u1576 \u1575 \u1740 \u1583 
+\f1  
+\f6 \uc0\u1576 \u1607 
+\f1  
+\f6 \uc0\u1605 \u1575 \u1688 \u1608 \u1604 \u1607 \u1575 \u1740 
+\f1  
+\f6 \uc0\u1587 \u1591 \u1581 
+\f1  
+\f6 \uc0\u1662 \u1575 \u1740 \u1740 \u1606 
+\f1  
+\f6 \uc0\u1608 \u1575 \u1576 \u1587 \u1578 \u1607 
+\f1  
+\f6 \uc0\u1576 \u1575 \u1588 \u1606 \u1583 \u1548 
+\f1  
+\f6 \uc0\u1607 \u1585 
+\f1  
+\f6 \uc0\u1583 \u1608 
+\f1  
+\f6 \uc0\u1576 \u1575 \u1740 \u1583 
+\f1  
+\f6 \uc0\u1576 \u1607 
+\f1  
+\f6 \uc0\u1575 \u1606 \u1578 \u1586 \u1575 \u1593 \u1575 \u1578 
+\f1  
+\f6 \uc0\u1608 \u1575 \u1576 \u1587 \u1578 \u1607 
+\f1  
+\f6 \uc0\u1576 \u1575 \u1588 \u1606 \u1583 
+\f1 . 
+\f6 \uc0\u1575 \u1606 \u1578 \u1586 \u1575 \u1593 \u1575 \u1578 
+\f1  
+\f6 \uc0\u1606 \u1576 \u1575 \u1740 \u1583 
+\f1  
+\f6 \uc0\u1608 \u1575 \u1576 \u1587 \u1578 \u1607 
+\f1  
+\f6 \uc0\u1576 \u1607 
+\f1  
+\f6 \uc0\u1580 \u1586 \u1574 \u1740 \u1575 \u1578 
+\f1  
+\f6 \uc0\u1576 \u1575 \u1588 \u1606 \u1583 \u1548 
+\f1  
+\f6 \uc0\u1576 \u1604 \u1705 \u1607 
+\f1  
+\f6 \uc0\u1580 \u1586 \u1574 \u1740 \u1575 \u1578 
+\f1  
+\f6 \uc0\u1576 \u1575 \u1740 \u1583 
+\f1  
+\f6 \uc0\u1608 \u1575 \u1576 \u1587 \u1578 \u1607 
+\f1  
+\f6 \uc0\u1576 \u1607 
+\f1  
+\f6 \uc0\u1575 \u1606 \u1578 \u1586 \u1575 \u1593 \u1575 \u1578 
+\f1  
+\f6 \uc0\u1576 \u1575 \u1588 \u1606 \u1583 
+\f5\fs24 \cf19 \cb1 \expnd0\expndtw0\kerning0
+\
+\pard\pardeftab720\sl280\sa240\partightenfactor0
+\cf19 \
+GRASP:\
+\pard\tx939\pardeftab939\pardirnatural\partightenfactor0
+
+\f1\fs38 \cf23 \cb13 \kerning1\expnd0\expndtw0 //GRASP : General Responsibility Assignment Software 
+\f0\fs24 \cf0 \
+
+\f1\fs38 \cf23 /*
+\f0\fs24 \cf0 \
+
+\f1\fs38 \cf23  
+\f6 \uc0\u1740 \u1606 
+\f1  
+\f6 \uc0\u1575 \u1589 \u1608 \u1604 
+\f1  
+\f6 \uc0\u1576 \u1607 
+\f1  
+\f6 \uc0\u1576 \u1585 \u1585 \u1587 \u1740 
+\f1  
+\f6 \uc0\u1606 \u1581 \u1608 \u1607 
+\f1  
+\f6 \uc0\u1578 \u1602 \u1587 \u1740 \u1605 
+\f1  
+\f6 \uc0\u1608 \u1592 \u1575 \u1740 \u1601 
+\f1  
+\f6 \uc0\u1576 \u1740 \u1606 
+\f1  
+\f6 \uc0\u1705 \u1604 \u1575 \u1587 \u8204 \u1607 \u1575 
+\f1  
+\f6 \uc0\u1608 
+\f1  
+\f6 \uc0\u1605 \u1588 \u1575 \u1585 \u1705 \u1578 
+\f1  
+\f6 \uc0\u1575 \u1588 \u1740 \u1575 \u1569 
+\f1  
+\f6 \uc0\u1576 \u1585 \u1575 \u1740 
+\f1  
+\f6 \uc0\u1576 \u1607 
+\f1  
+\f6 \uc0\u1575 \u1606 \u1580 \u1575 \u1605 
+\f1  
+\f6 \uc0\u1585 \u1587 \u1575 \u1606 \u1583 \u1606 
+\f1  
+\f6 \uc0\u1740 \u1705 
+\f1  
+\f6 \uc0\u1605 \u1587 \u1574 \u1608 \u1604 \u1740 \u1578 
+\f1  
+\f6 \uc0\u1605 \u1740 \u8204 \u1662 \u1585 \u1583 \u1575 \u1586 \u1606 \u1583 
+\f1 . 
+\f6 \uc0\u1575 \u1740 \u1606 \u1705 \u1607 
+\f1  
+\f6 \uc0\u1607 \u1585 
+\f1  
+\f6 \uc0\u1705 \u1604 \u1575 \u1587 
+\f1  
+\f6 \uc0\u1583 \u1585 
+\f1  
+\f6 \uc0\u1587 \u1575 \u1582 \u1578 \u1575 \u1585 
+\f1  
+\f6 \uc0\u1606 \u1585 \u1605 
+\f1  
+\f6 \uc0\u1575 \u1601 \u1586 \u1575 \u1585 
+\f1  
+\f6 \uc0\u1670 \u1607 
+\f1  
+\f6 \uc0\u1608 \u1592 \u1740 \u1601 \u1607 \u8204 \u1575 \u1740 
+\f1  
+\f6 \uc0\u1583 \u1575 \u1585 \u1583 
+\f1  
+\f6 \uc0\u1608 
+\f1  
+\f6 \uc0\u1670 \u1711 \u1608 \u1606 \u1607 
+\f1  
+\f6 \uc0\u1576 \u1575 
+\f1  
+\f6 \uc0\u1705 \u1604 \u1575 \u1587 \u8204 \u1607 \u1575 \u1740 
+\f1  
+\f6 \uc0\u1583 \u1740 \u1711 \u1585 
+\f1  
+\f6 \uc0\u1605 \u1588 \u1575 \u1585 \u1705 \u1578 
+\f1  
+\f6 \uc0\u1605 \u1740 \u1705 \u1606 \u1583 
+\f1  
+\f6 \uc0\u1578 \u1575 
+\f1  
+\f6 \uc0\u1740 \u1705 
+\f1  
+\f6 \uc0\u1593 \u1605 \u1604 \u1705 \u1585 \u1583 
+\f1  
+\f6 \uc0\u1576 \u1607 
+\f1  
+\f6 \uc0\u1587 \u1740 \u1587 \u1578 \u1605 
+\f1  
+\f6 \uc0\u1575 \u1590 \u1575 \u1601 \u1607 
+\f1  
+\f6 \uc0\u1711 \u1585 \u1583 \u1583 
+\f1 . 
+\f6 \uc0\u1575 \u1740 \u1606 
+\f1  
+\f6 \uc0\u1575 \u1589 \u1608 \u1604 
+\f1  
+\f6 \uc0\u1576 \u1607 
+\f1  
+\f6 \uc0\u1670 \u1606 \u1583 
+\f1  
+\f6 \uc0\u1576 \u1582 \u1588 
+\f1  
+\f6 \uc0\u1578 \u1602 \u1587 \u1740 \u1605 
+\f1  
+\f6 \uc0\u1605 \u1740 
+\f1 \'ad
+\f6 \uc0\u1588 \u1608 \u1606 \u1583 
+\f1 :
+\f0\fs24 \cf0 \
+
+\f1\fs38 \cf23  \
+ 
+\f6 \uc0\u1705 \u1606 \u1578 \u1585 \u1604 \u1585 
+\f1  ( Controller )
+\f0\fs24 \cf0 \
+
+\f1\fs38 \cf23  
+\f6 \uc0\u1575 \u1740 \u1580 \u1575 \u1583 
+\f1  
+\f6 \uc0\u1705 \u1606 \u1606 \u1583 \u1607 
+\f1  ( Creator )
+\f0\fs24 \cf0 \
+
+\f1\fs38 \cf23  
+\f6 \uc0\u1575 \u1606 \u1587 \u1580 \u1575 \u1605 
+\f1  
+\f6 \uc0\u1602 \u1608 \u1740 
+\f1  ( High Cohesion )
+\f0\fs24 \cf0 \
+
+\f1\fs38 \cf23  
+\f6 \uc0\u1608 \u1575 \u1587 \u1591 \u1607 
+\f1  
+\f6 \uc0\u1711 \u1585 \u1740 
+\f1  ( Indirection )
+\f0\fs24 \cf0 \
+
+\f1\fs38 \cf23  
+\f6 \uc0\u1583 \u1575 \u1606 \u1575 \u1740 
+\f1  
+\f6 \uc0\u1575 \u1591 \u1604 \u1575 \u1593 \u1575 \u1578 
+\f1  ( Information Expert )
+\f0\fs24 \cf0 \
+
+\f1\fs38 \cf23  
+\f6 \uc0\u1575 \u1578 \u1589 \u1575 \u1604 
+\f1  
+\f6 \uc0\u1590 \u1593 \u1740 \u1601 
+\f1  ( Low Coupling )
+\f0\fs24 \cf0 \
+
+\f1\fs38 \cf23  
+\f6 \uc0\u1670 \u1606 \u1583 
+\f1  
+\f6 \uc0\u1585 \u1740 \u1582 \u1578 \u1740 
+\f1  ( Polymorphism )
+\f0\fs24 \cf0 \
+
+\f1\fs38 \cf23  
+\f6 \uc0\u1581 \u1601 \u1575 \u1592 \u1578 
+\f1  
+\f6 \uc0\u1575 \u1586 
+\f1  
+\f6 \uc0\u1578 \u1575 \u1579 \u1740 \u1585 
+\f1  
+\f6 \uc0\u1578 \u1594 \u1740 \u1740 \u1585 \u1575 \u1578 
+\f1  ( Protected Variations )
+\f0\fs24 \cf0 \
+
+\f1\fs38 \cf23  
+\f6 \uc0\u1605 \u1589 \u1606 \u1608 \u1593 
+\f1  
+\f6 \uc0\u1582 \u1575 \u1604 \u1589 
+\f1  ( Pure Fabrication )
+\f0\fs24 \cf0 \
+
+\f1\fs38 \cf23 \
+\
+
+\f5\fs24 \cf19 \cb1 \expnd0\expndtw0\kerning0
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f0\fs44 \cf0 \kerning1\expnd0\expndtw0 \
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\fs24 \cf0 {{\NeXTGraphic 2__#$!@%!#__Pasted Graphic.tiff \width22940 \height5980 \appleattachmentpadding0 \appleembedtype0 \appleaqc
+}¬}\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\fs44 \cf0 \
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\fs24 \cf0 {{\NeXTGraphic 1__#$!@%!#__Pasted Graphic 1.tiff \width18600 \height620 \appleattachmentpadding0 \appleembedtype0 \appleaqc
+}¬}\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+\cf0 \
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+\cf0 {{\NeXTGraphic Pasted Graphic 2.tiff \width22960 \height1660 \appleattachmentpadding0 \appleembedtype0 \appleaqc
+}¬}\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+\cf0 \
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+\cf0 {{\NeXTGraphic Pasted Graphic 3.tiff \width10440 \height5460 \appleattachmentpadding0 \appleembedtype0 \appleaqc
+}¬}\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+\cf0 \
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+\cf0 {{\NeXTGraphic Pasted Graphic 4.tiff \width22740 \height2440 \appleattachmentpadding0 \appleembedtype0 \appleaqc
+}¬}\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+\cf0 \
+\
+DIP: Dependency Inversion\
+\
+\pard\pardeftab720\sl340\qr\partightenfactor0
+\cf0 \
+*
+\f7\fs28 \cf11 \cb28 \expnd0\expndtw0\kerning0
+\uc0\u1578 \u1593 \u1585 \u1740 \u1601  \u1740 \u1705  \u1575 \u1740 \u1606 \u1578 \u1585 \u1601 \u1740 \u1587  \u1578 \u1606 \u1607 \u1575  \u1586 \u1605 \u1575 \u1606 \u1740  \u1575 \u1585 \u1586 \u1588  \u1582 \u1608 \u1575 \u1607 \u1583  \u1583 \u1575 \u1588 \u1578  \u1705 \u1607  \u1670 \u1606 \u1583 \u1740 \u1606  \u1662 \u1740 \u1575 \u1583 \u1607  \u1587 \u1575 \u1586 \u1740  \u1575 \u1586  \u1570 \u1606  \u1575 \u1585 \u1575 \u1574 \u1607  \u1588 \u1608 \u1583 .\
+\
+
+\f0\fs24 \cf0 \cb1 \kerning1\expnd0\expndtw0 \
+\
+\pard\pardeftab720\sl340\partightenfactor0
+
+\fs48 \cf0 class vs struct?\
+class reference type, struct value type\
+structs can not have inheritance\
+\
+Concurency:\
+\
+* doing some tasks at the same time\
+* for example iPhone use A10 quad core CPUs that can handle tasks in the same time.\
+* queue : First in First out: FIFO\
+* 2 types Queue: serial & concurrent\
+* serial: first task excited completely the second task executed completely then third and so on. -> Predictable,\
+* concurrent: tasks execute without waiting for each other.\
+\
+queues in iOS: we have 2 types of queue :\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\fs24 \cf0 {{\NeXTGraphic 3__#$!@%!#__Pasted Graphic.tiff \width21920 \height11720 \appleattachmentpadding0 \appleembedtype0 \appleaqc
+}¬}\
+\
+
+\fs48 *we can use this code to do tasks in background with quality of service:\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\fs24 \cf0 {{\NeXTGraphic 2__#$!@%!#__Pasted Graphic 1.tiff \width24980 \height3380 \appleattachmentpadding0 \appleembedtype0 \appleaqc
+}¬}\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\fs48 \cf0 \
+\pard\pardeftab720\sl340\partightenfactor0
+\cf0 \
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+\cf0 \
+\
+\
+Difference Between frame and Bounds:\
+\
+frame: is a position relative to parent view.\
+bound: is a position relative to won coordinate system.\
+whats deference : when we rotate or transform the view its frame will be change , x , y changed , width and height will be changed and not equal to its bounds.\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+\cf0 \
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+\cf0 bounds and frame are very similar until transform and rotate.\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\fs24 \cf0 {{\NeXTGraphic 1__#$!@%!#__Pasted Graphic 3.tiff \width8340 \height7480 \appleattachmentpadding0 \appleembedtype0 \appleaqc
+}¬}\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\fs48 \cf0 \
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+\cf0 \
+\
+* map function for manipulate data like multiply, decrease, change\
+\
+* reduce function for combine all of values to one like taking sum up all data, total, or average ..:\
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\fs24 \cf0 {{\NeXTGraphic 1__#$!@%!#__Pasted Graphic 4.tiff \width12500 \height960 \appleattachmentpadding0 \appleembedtype0 \appleaqc
+}¬}\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\fs48 \cf0 \
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+\cf0 \
+\
+*delegation pattern: is one to one communication pattern\
+* Notification and observers are is one to many pattern\
+\
+* when we have function that throws we need to try catch and we have to use do catch block:\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\fs24 \cf0 {{\NeXTGraphic Pasted Graphic 6.tiff \width11700 \height1560 \appleattachmentpadding0 \appleembedtype0 \appleaqc
+}¬}\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+\cf0 \
+\
+do catch block\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+\cf0 {{\NeXTGraphic Pasted Graphic 7.tiff \width16400 \height4800 \appleattachmentpadding0 \appleembedtype0 \appleaqc
+}¬}\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\fs48 \cf0 \
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+\cf0 \
+* function that throws:\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\fs24 \cf0 {{\NeXTGraphic Pasted Graphic 8.tiff \width10360 \height9740 \appleattachmentpadding0 \appleembedtype0 \appleaqc
+}¬}\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\fs48 \cf0 \
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+\cf0 \
+and catch this function:\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\fs24 \cf0 {{\NeXTGraphic Pasted Graphic 9.tiff \width19300 \height8160 \appleattachmentpadding0 \appleembedtype0 \appleaqc
+}¬}\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\fs48 \cf0 \
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+\cf0 \
+\
+defrence between framework, literary and third party?\
+\
+UIKit is an framework\
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\fs24 \cf0 {{\NeXTGraphic Pasted Graphic 10.tiff \width23880 \height5080 \appleattachmentpadding0 \appleembedtype0 \appleaqc
+}¬}\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\fs48 \cf0 \
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+\cf0 \
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+}
